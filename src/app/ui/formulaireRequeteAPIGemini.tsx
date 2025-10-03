@@ -8,25 +8,25 @@ import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
 
 export default function FormulaireRequeteAPIGemini({onSoumission}: {
-    onSoumission: (requete: string, schema: Schema) => void
+    onSoumission: (requete: string, responseSchema: Schema) => void
 }) {
     const [requete, setRequete] = useState<string>();
-    const [schema, setSchema] = useState<Schema>();
+    const [responseSchema, setResponseSchema] = useState<Schema>();
 
 
     function afficherSchema() {
-        if (schema) {
-            return <Noeud schema={schema}/>;
+        if (responseSchema) {
+            return <Noeud schema={responseSchema}/>;
         } else {
             return <CreerNoeud
                 types={[Type.ARRAY, Type.OBJECT, Type.STRING, Type.NUMBER, Type.INTEGER, Type.BOOLEAN]}
-                onCreationTerminee={(s) => setSchema(s)}/>;
+                onCreationTerminee={(s) => setResponseSchema(s)}/>;
         }
     }
 
     function soumettre() {
-        if (requete && schema) {
-            onSoumission(requete, schema);
+        if (requete && responseSchema) {
+            onSoumission(requete, responseSchema);
         }
     }
 

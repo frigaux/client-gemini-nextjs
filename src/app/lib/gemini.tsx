@@ -4,15 +4,15 @@ import {GoogleGenAI, Schema} from "@google/genai";
 
 const CLE_API_GEMINI = 'CLE_API_GEMINI';
 
-export default async function fetchGemini(requete: string, schema: Schema): Promise<object | string> {
+export default async function fetchGemini(contents: string, responseSchema: Schema): Promise<object | string> {
     const ai = new GoogleGenAI({apiKey: chargerCleAPIGemini()});
     return new Promise((resolve, reject) => {
         ai.models.generateContent({
             model: "gemini-2.5-flash",
-            contents: requete,
+            contents,
             config: {
                 responseMimeType: "application/json",
-                responseSchema: schema,
+                responseSchema,
             }
         }).then(value => {
             console.log('Résultat :', value);

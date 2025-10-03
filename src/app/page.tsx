@@ -2,7 +2,7 @@
 
 import fetchGemini, {chargerCleAPIGemini} from "@/app/lib/gemini";
 import FormulaireEditionCleAPIGemini from "./ui/formulaireEditionCleAPIGemini";
-import {Suspense, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Actions from "@/app/ui/actions";
 import FormulaireRequeteAPIGemini from "@/app/ui/formulaireRequeteAPIGemini";
 import {Schema} from "@google/genai";
@@ -11,7 +11,7 @@ import ResultatAPIGemini from "@/app/ui/resultatAPIGemini";
 export default function Home() {
     const [afficherFormulaireCleAPI, setAfficherFormulaireCleAPI] = useState<boolean>(false);
     const [afficherFormulaireRequeteAPI, setAfficherFormulaireRequeteAPI] = useState<boolean>(false);
-    const [reponse, setReponse] = useState<Promise<object | string> | undefined>(undefined);
+    const [requete, setRequete] = useState<Promise<object | string> | undefined>(undefined);
 
     useEffect(() => {
         setAfficherFormulaireCleAPI(chargerCleAPIGemini() === undefined);
@@ -29,10 +29,10 @@ export default function Home() {
         setAfficherFormulaireRequeteAPI(true);
     }
 
-    function onSoumissionRequeteAPI(requete: string, schema: Schema) {
+    function onSoumissionRequeteAPI(contents: string, responseSchema: Schema) {
         setAfficherFormulaireRequeteAPI(false);
-        console.log('Requête : ', requete, 'Schéma :', schema);
-        setReponse(fetchGemini(requete, schema));
+        console.log('Requête : ', contents, 'Schéma :', responseSchema);
+        setRequete(fetchGemini(contents, responseSchema));
     }
 
     function formulaires() {
@@ -46,16 +46,10 @@ export default function Home() {
                         onAffichageFormulaireRequeteAPI={onAffichageFormulaireRequeteAPI}/>;
     }
 
-    function resultat() {
-        return <Suspense fallback={<span>Chargement...</span>}>
-            <ResultatAPIGemini reponse={reponse}/>
-        </Suspense>;
-    }
-
     return (
         <>
             <div>{formulaires()}</div>
-            <div>{resultat()}</div>
+            <div>{requete ? <ResultatAPIGemini requete={requete}/> : ''}</div>
         </>
     );
 }

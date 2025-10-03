@@ -2,20 +2,19 @@
 
 import {useState} from "react";
 
-export default function ResultatAPIGemini({reponse}: { reponse: Promise<object | string> | undefined }) {
+export default function ResultatAPIGemini({requete}: { requete: Promise<object | string> }) {
     const [erreur, setErreur] = useState<string>();
     const [resultat, setResultat] = useState<string>();
 
-    if (reponse) {
-        reponse
-            .then(value => setResultat(JSON.stringify(value, null, 2)))
-            .catch(reason => setErreur(reason));
-    }
+    requete
+        .then(value => setResultat(JSON.stringify(value, null, 2)))
+        .catch(reason => setErreur(reason));
 
     return (
         <div className="resultat">
+            {!erreur && !resultat ? <div className="chargement">Chargement...</div> : ''}
             <div className="erreur">{erreur}</div>
-            <div className="succes">{resultat}</div>
+            <pre className="succes">{resultat}</pre>
         </div>
     );
 }
