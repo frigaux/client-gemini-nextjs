@@ -5,6 +5,7 @@ import {GoogleGenAI, Schema} from "@google/genai";
 const CLE_API_GEMINI = 'CLE_API_GEMINI';
 
 export default async function fetchGemini(contents: string, responseSchema: Schema): Promise<object | string> {
+    console.log('Requête : ', contents, 'Schéma :', responseSchema);
     const ai = new GoogleGenAI({apiKey: chargerCleAPIGemini()});
     return new Promise((resolve, reject) => {
         ai.models.generateContent({

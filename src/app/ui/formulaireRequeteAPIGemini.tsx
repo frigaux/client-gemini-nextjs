@@ -6,9 +6,10 @@ import Noeud from "@/app/ui/noeud/affichage/noeud";
 import CreerNoeud from "@/app/ui/noeud/edition/creerNoeud";
 import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
+import fetchGemini from "@/app/lib/gemini";
 
 export default function FormulaireRequeteAPIGemini({onSoumission}: {
-    onSoumission: (requete: string, responseSchema: Schema) => void
+    onSoumission: (requete: Promise<object | string>) => void
 }) {
     const [requete, setRequete] = useState<string>();
     const [responseSchema, setResponseSchema] = useState<Schema>();
@@ -26,7 +27,7 @@ export default function FormulaireRequeteAPIGemini({onSoumission}: {
 
     function soumettre() {
         if (requete && responseSchema) {
-            onSoumission(requete, responseSchema);
+            onSoumission(fetchGemini(requete, responseSchema));
         }
     }
 

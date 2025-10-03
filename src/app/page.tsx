@@ -1,11 +1,10 @@
 'use client'
 
-import fetchGemini, {chargerCleAPIGemini} from "@/app/lib/gemini";
+import {chargerCleAPIGemini} from "@/app/lib/gemini";
 import FormulaireEditionCleAPIGemini from "./ui/formulaireEditionCleAPIGemini";
 import {useEffect, useState} from "react";
 import Actions from "@/app/ui/actions";
 import FormulaireRequeteAPIGemini from "@/app/ui/formulaireRequeteAPIGemini";
-import {Schema} from "@google/genai";
 import ResultatAPIGemini from "@/app/ui/resultatAPIGemini";
 
 export default function Home() {
@@ -29,10 +28,9 @@ export default function Home() {
         setAfficherFormulaireRequeteAPI(true);
     }
 
-    function onSoumissionRequeteAPI(contents: string, responseSchema: Schema) {
+    function onSoumissionRequeteAPI(req: Promise<object | string>) {
         setAfficherFormulaireRequeteAPI(false);
-        console.log('Requête : ', contents, 'Schéma :', responseSchema);
-        setRequete(fetchGemini(contents, responseSchema));
+        setRequete(req);
     }
 
     function formulaires() {
