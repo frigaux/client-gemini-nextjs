@@ -1,0 +1,54 @@
+@use "tailwindcss"
+
+:root
+  --background: #ffffff
+  --foreground: #171717
+
+@theme inline
+  --color-background: var(--background)
+  --color-foreground: var(--foreground)
+  --font-sans: var(--font-geist-sans)
+  --font-mono: var(--font-geist-mono)
+
+@media (prefers-color-scheme: dark)
+  :root
+    --background: #0a0a0a
+    --foreground: #ededed
+
+body
+  background: var(--background)
+  color: var(--foreground)
+  font-family: Arial, Helvetica, sans-serif
+
+  form
+    margin: 2rem
+    display: inline-block
+
+    .p-float-label
+      margin: 2rem 0 0 0
+      display: inline-block
+
+    .p-float-label:not(:first-child)
+      margin-left: 1rem
+
+    button
+      margin-left: 1rem
+      display: inline-block
+
+    div.noeud, div.attribut
+      margin: 0 0 0 1rem
+
+  div.actions
+    span
+      margin: 1rem
+      cursor: pointer
+      color: blue
+
+  div.resultat
+    margin: 2rem
+
+    .erreur
+      color: red
+
+    .succes
+      color: green
